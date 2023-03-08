@@ -1,0 +1,16 @@
+spring:
+  # datasource--就是配置连接数据的信息
+  datasource:
+    username: root
+    password: 8bf14c714c3f8df1
+    url: jdbc:mysql://localhost:3306/ssm?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  #如果用注解方式下面两个配置没什么意义，是搭配配置xml文件使用的
+  #type-aliases-package: cn.king.pojo  
+  #mapper-locations: classpath:mybatis/mapper/*.xml  
+  #开启驼峰，mysql用emp_id,java用empId.
+  #可以自由转换。
+  configuration:
+    map-underscore-to-camel-case: true
+

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <style>
+        a{
+          font-size: 24px;
+        }
+        li{
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+<ol >
+    <li >
+        <a th:href="@{/employee/employee_list}"  >查看所以所以员工的信息</a>
+    </li>
+    <li >
+        <a th:href="@{/employee/employee_pageList}"  >分页查看所以所以员工的信息</a>
+    </li>
+</ol>
+</body>
+</html>

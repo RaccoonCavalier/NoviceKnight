@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>员工列表</title>
+    <link rel="stylesheet" type="text/css" href="../css/index_work.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+  <script type="text/javascript">
+    window.onload = function (){
+      var asf = document.getElementById("btu");
+      asf.onclick = function (){
+        var form = document.getElementsByTagName("form")[0]
+        form.action = event.target.href;
+        form.submit();
+        event.preventDefault()
+      }
+    }
+  </script>
+
+</head>
+<body>
+<div>
+  <table>
+    <tr>
+      <th colspan="6" >员工列表</th>
+    </tr>
+    <tr>
+      <th>员工ID</th>
+      <th>姓名</th>
+      <th>年龄</th>
+      <th>性别</th>
+      <th>邮箱</th>
+      <th>操作(<a>新增</a>)</th>
+    </tr>
+    <!-- 循环打印数据库中数据 -->
+    <tr th:each="employee ,status:${page.records}">
+      <td th:text="${employee.id}"></td>
+      <td th:text="${employee.empName}"></td>
+      <td th:text="${employee.age}"></td>
+      <td th:text="${employee.sex}"></td>
+      <td th:text="${employee.email}"></td>
+      <td>
+        <!-- jsp提交 -->
+        <a id="btu"  th:href="@{'/employee/employee_delete/' + ${employee.id} }">删除</a>
+        <!-- vue提交 -->
+        <a id="app"  th:href="@{'/employee/employee_delete/' + ${employee.id} }">删除</a>
+        <!-- form提交 -->
+        <form th:action="@{'/employee/employee_delete/' + ${employee.id} }" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <input type="submit" value="删除">
+        </form>
+
+        <a>修改</a>
+      </td>
+    </tr>
+  </table>
+</div>
+  <div style="text-align: center">
+    <span>当前第 [[${page.current}]]页</span>
+    <span>总计 [[${page.pages}]] 页</span>
+    <span>共[[${page.total}]] 条记录</span>
+  </div>
+  <div style="text-align: center">
+    <!--hasPrevious方法，是否还存在上一页-->
+    <!-- 首页不会在第一页显示，上一页选项也是 -->
+    <span th:if="${page.hasPrevious()}">
+      <a th:href="@{/employee/employee_pageList(pn=1)}">首页</a>
+    </span>
+    <span th:if="${page.hasPrevious()}">
+      <a th:href="@{/employee/employee_pageList(pn=${page.current}-1)}">上一页</a>
+    </span>
+    <!-- hasNext方法，是否还存在下一页 -->
+    <!-- 尾页不会在第一页显示，上一页选项也是 -->
+    <span th:if="${page.hasNext()}">
+      <a th:href="@{/employee/employee_pageList(pn=${page.current}+1)}">下一页</a>
+    </span>
+    <span th:if="${page.hasNext()}">
+      <a th:href="@{/employee/employee_pageList(pn=${page.pages})}">尾页</a>
+    </span>
+  </div>
+  <!-- 一个delete请求，看老师的项目是用一个vue,搭配dom和原生的event发送请求 -->
+  <form  method="post">
+    <input type="hidden" name="_method" value="delete">
+  </form>
+
+<script>
+  var vue = new Vue({
+    el:'#app',
+    method: {
+     deleteEmployee(){
+          //这出老师使用的是getElementsByTagName(),但是我查阅网站，人家还是推荐ById.
+          //想想也知道ById更准确，如果在form前面在插入一个form，岂不会产生错乱。
+          var form = document.getElementsByTagName("form")[0]
+          form.action = window.event.target.href
+          form.submit();
+          window.event.preventDefault();
+
+        }
+      }
+  })
+
+</script>
+
+
+
+</body>
+</html>

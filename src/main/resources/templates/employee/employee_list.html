@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>employee_list</title>
+  <!-- 重点 -->
+    <link rel="stylesheet" type="text/css" href="../css/index_work.css">
+<body>
+  <table>
+    <tr>
+      <th colspan="6" >员工列表</th>
+    </tr>
+    <tr>
+      <th>员工ID</th>
+      <th>姓名</th>
+      <th>年龄</th>
+      <th>性别</th>
+      <th>邮箱</th>
+      <th>操作</th>
+    </tr>
+    <tr th:each="employee ,status:${EmployeeList}">
+      <td th:text="${employee.id}"></td>
+      <td th:text="${employee.empName}"></td>
+      <td th:text="${employee.age}"></td>
+      <td th:text="${employee.sex}"></td>
+      <td th:text="${employee.email}"></td>
+      <td>空</td>
+    </tr>
+  </table>
+</body>
+</html>
